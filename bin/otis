@@ -1,0 +1,10 @@
+#!/usr/bin/env python
+import time
+
+from otis.cli.main import main
+
+
+if __name__ == '__main__':
+    start_time = time.time()
+    main()
+    print("elapsed: {0} seconds".format("%.2f" % (time.time() - start_time)))
