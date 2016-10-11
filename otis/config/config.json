@@ -1,0 +1,23 @@
+{
+  "elevators": {
+    "1": {
+      "cur_floor": 0,
+      "floors": [
+        3
+      ],
+      "state": "up"
+    },
+    "2": {
+      "cur_floor": 8,
+      "floors": [
+        1
+      ],
+      "state": "down"
+    },
+    "3": {
+      "cur_floor": 0,
+      "floors": [],
+      "state": "maintenance"
+    }
+  }
+}
