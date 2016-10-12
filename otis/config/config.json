@@ -1,23 +1,24 @@
 {
+  "down_queue": [],
   "elevators": {
     "1": {
       "cur_floor": 0,
-      "floors": [
-        3
-      ],
-      "state": "up"
+      "enter": [],
+      "exit": [],
+      "state": "stopped"
     },
     "2": {
-      "cur_floor": 8,
-      "floors": [
-        1
-      ],
-      "state": "down"
+      "cur_floor": 0,
+      "enter": [],
+      "exit": [],
+      "state": "stopped"
     },
     "3": {
       "cur_floor": 0,
-      "floors": [],
+      "enter": [],
+      "exit": [],
       "state": "maintenance"
     }
-  }
+  },
+  "up_queue": []
 }

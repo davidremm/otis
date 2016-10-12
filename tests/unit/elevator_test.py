@@ -10,7 +10,8 @@ class TestElevator(unittest.TestCase):
             id=1,
             state='up',
             cur_floor=4,
-            floors=[5]
+            enter_list=[],
+            exit_list=[5]
         )
-        elevator.step()
+        elevator.step([], [])
         assert elevator.state == "stopped"
