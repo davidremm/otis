@@ -32,9 +32,11 @@ class List():
             elif elevator['state'] == 'stopped':
                 print("Elevator {0} is available on floor {1}".format(elevator_id, elevator['cur_floor']))
             else:
-                print("Elevator {0} is on floor {1} and headed {2}. Remaining floors {3}".format(
+                print("Elevator {0} is on floor {1} and headed {2}, temp_state {3}. Pickup locations {4}, dropoff locations {5}".format(
                     elevator_id,
                     elevator['cur_floor'],
                     elevator['state'],
-                    elevator['floors']
+                    elevator['temp_state'],
+                    elevator['enter'],
+                    elevator['exit']
                 ))

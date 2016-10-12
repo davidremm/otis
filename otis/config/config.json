@@ -1,24 +1,29 @@
 {
-  "down_queue": [],
+  "down_enter_queue": [],
+  "down_exit_queue": [],
   "elevators": {
     "1": {
       "cur_floor": 0,
       "enter": [],
       "exit": [],
-      "state": "stopped"
+      "state": "stopped",
+      "temp_state": ""
     },
     "2": {
       "cur_floor": 0,
       "enter": [],
       "exit": [],
-      "state": "stopped"
+      "state": "stopped",
+      "temp_state": ""
     },
     "3": {
       "cur_floor": 0,
       "enter": [],
       "exit": [],
-      "state": "maintenance"
+      "state": "maintenance",
+      "temp_state": ""
     }
   },
-  "up_queue": []
+  "up_enter_queue": [],
+  "up_exit_queue": []
 }

@@ -60,8 +60,10 @@ class Run():
                 location=int(args.location),
                 destination=int(args.destination),
                 elevators=config['elevators'],
-                up_queue=config['up_queue'],
-                down_queue=config['down_queue']
+                up_enter_queue=config['up_enter_queue'],
+                up_exit_queue=config['up_exit_queue'],
+                down_enter_queue=config['down_enter_queue'],
+                down_exit_queue=config['down_exit_queue']
             )
 
         # allow each elevator to make one step
@@ -69,18 +71,24 @@ class Run():
             elevator_obj = Elevator(
                 id=elevator_id,
                 state=elevator['state'],
+                temp_state=elevator['temp_state'],
                 cur_floor=elevator['cur_floor'],
                 enter_list=elevator['enter'],
                 exit_list=elevator['exit']
             )
-            elevator_obj.step(up_queue=config['up_queue'], down_queue=config['down_queue'])
+            elevator_obj.step(
+                up_enter_queue=config['up_enter_queue'],
+                up_exit_queue=config['up_exit_queue'],
+                down_enter_queue=config['down_enter_queue'],
+                down_exit_queue=config['down_exit_queue']
+            )
             self.update_state(config, elevator_obj)
 
         # write state to config
         config_obj.write_json_config(config=config)
 
     @staticmethod
-    def find_best_elevator(location, destination, elevators, up_queue, down_queue):
+    def find_best_elevator(location, destination, elevators, up_enter_queue, up_exit_queue, down_enter_queue, down_exit_queue):
         """
         Determine the best elevator for the user to enter and update the elevators list of unique floors.
 
@@ -100,14 +108,14 @@ class Run():
                 continue
 
             # both headed up
-            if elevator['state'] == "up" and user_direction == "up":
+            if elevator['state'] == "up" and user_direction == "up" and elevator['temp_state'] == "":
                 # elevator is below user and (no min yet or if this elevator is closer than previous best)
                 if elevator['cur_floor'] <= location and (not min_wait or location - elevator['cur_floor'] < min_wait):
                     min_wait = location - elevator['cur_floor']
                     best_elevator_id = elevator_id
 
             # both headed down
-            elif elevator['state'] == "down" and user_direction == "down":
+            elif elevator['state'] == "down" and user_direction == "down" and elevator['temp_state'] == "":
                 if elevator['cur_floor'] >= location and (not min_wait or elevator['cur_floor'] - location < min_wait):
                     min_wait = elevator['cur_floor'] - location
                     best_elevator_id = elevator_id
@@ -129,9 +137,11 @@ class Run():
         else:
             # add user to queue
             if location < destination:
-                up_queue.append(location)
+                up_enter_queue.append(location)
+                up_exit_queue.append(destination)
             elif location > destination:
-                down_queue.append(location)
+                down_enter_queue.append(location)
+                down_exit_queue.append(destination)
             else:
                 # location == destination, nothing to do
                 pass
@@ -146,6 +156,7 @@ class Run():
         """
         elevator = config['elevators'][elevator_obj.id]
         elevator['state'] = elevator_obj.state
+        elevator['temp_state'] = elevator_obj.temp_state
         elevator['cur_floor'] = elevator_obj.cur_floor
         elevator['enter'] = elevator_obj.enter_list
         elevator['exit'] = elevator_obj.exit_list

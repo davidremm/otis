@@ -52,6 +52,7 @@ class Maintenance():
             print("Elevator {0} is now available".format(args.elevator_id))
         else:
             config['elevators'][args.elevator_id]['state'] = 'maintenance'
-            config['elevators'][args.elevator_id]['floors'] = []
+            config['elevators'][args.elevator_id]['enter'] = []
+            config['elevators'][args.elevator_id]['exit'] = []
             print("Elevator {0} is now in maintenance mode".format(args.elevator_id))
         config_obj.write_json_config(config=config)
